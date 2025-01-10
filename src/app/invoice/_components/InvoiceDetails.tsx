@@ -1,11 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
   BlobProvider,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
@@ -13,6 +8,16 @@ import InvoicePDF from "./InvoicePDF";
 import { DownloadIcon } from "lucide-react";
 
 export default function InvoiceDetails({ data }: { data: any[] }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="px-5 h-full">
       <h1>PDF Preview</h1>
@@ -25,7 +30,7 @@ export default function InvoiceDetails({ data }: { data: any[] }) {
             ) : (
               <iframe
                 src={url!}
-                style={{ width: "100%", height:"600px" }}
+                style={{ width: "100%", height: "600px" }}
                 title="PDF Preview"
               />
             )
@@ -37,7 +42,7 @@ export default function InvoiceDetails({ data }: { data: any[] }) {
           document={<InvoicePDF data={data} />}
           fileName="somename.pdf"
         >
-          {({ loading }: { loading: boolean }) =>
+          {/* {({ loading }: { loading: boolean }) =>
             loading ? (
               <p>Loading PDF preview...</p>
             ) : (
@@ -48,7 +53,13 @@ export default function InvoiceDetails({ data }: { data: any[] }) {
                 Download now!
               </button>
             )
-          }
+          } */}
+          <button className="btn flex gap-2 mt-8 border p-2 rounded-md">
+            <span>
+              <DownloadIcon />
+            </span>
+            Download now!
+          </button>
         </PDFDownloadLink>
       </div>
     </div>
