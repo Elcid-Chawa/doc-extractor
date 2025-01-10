@@ -19,10 +19,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, PlusCircle } from "lucide-react";
+import { Plus, PlusCircle, Save } from "lucide-react";
 import { DataTable } from "./InvoiceTable";
 
-export default function InvoiceForm({data, setData}:{data:any, setData:(prevData: any) => void}) {
+export default function InvoiceForm({
+  data,
+  headerData,
+  setData,
+  setHeaderData,
+}: {
+  data: any;
+  headerData: any;
+  setData: (prevData: any) => void;
+  setHeaderData: (prevData: any) => void;
+}) {
   const form = useForm();
   const columns = React.useMemo(
     () => [
@@ -59,8 +69,11 @@ export default function InvoiceForm({data, setData}:{data:any, setData:(prevData
             render={({ field }) => (
               <FormItem>
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={"USD"}
+                  onValueChange={(value) => {
+                    field.onChange;
+                    setHeaderData({ ...headerData, currency: value });
+                  }}
+                  defaultValue={headerData.currency}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -78,12 +91,14 @@ export default function InvoiceForm({data, setData}:{data:any, setData:(prevData
           />
           <FormField
             control={form.control}
-            name="invoice"
+            name="documentType"
             render={({ field }) => (
               <FormItem>
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={"invoice"}
+                  onValueChange={(value) => {
+                    setHeaderData({ ...headerData, documentType: value });
+                  }}
+                  defaultValue={headerData.documentType}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -107,8 +122,11 @@ export default function InvoiceForm({data, setData}:{data:any, setData:(prevData
                 <FormControl>
                   <input
                     type="date"
-                    value={new Date().toISOString().split("T")[0]}
-                    onChange={field.onChange}
+                    defaultValue={headerData.date}
+                    onChange={(e) => {
+                      field.onChange;
+                      setHeaderData({ ...headerData, date: e.target.value });
+                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -120,18 +138,31 @@ export default function InvoiceForm({data, setData}:{data:any, setData:(prevData
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input type="number" onChange={field.onChange} />
+                  <Input
+                    type="number"
+                    placeholder="Invoice Number"
+                    onChange={(e) => {
+                      field.onChange;
+                      setHeaderData({
+                        ...headerData,
+                        invoiceNumber: e.target.value,
+                      });
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="customer"
+            name="customerName"
             render={({ field }) => (
               <FormItem>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange;
+                    setHeaderData({ ...headerData, customerName: value });
+                  }}
                   defaultValue={field.value}
                 >
                   <FormControl>
@@ -148,13 +179,22 @@ export default function InvoiceForm({data, setData}:{data:any, setData:(prevData
               </FormItem>
             )}
           />
-          <Button type="button">
-            <PlusCircle />
+          <Button type="button" className="bg-green-500">
+            <Save />
           </Button>
         </div>
 
-        <DataTable form={form} data={data} onChange={setData} columns={columns} />
-        <Button onClick={addItem} type="button" className="mt-8 p-2 bg-green-500">
+        <DataTable
+          form={form}
+          data={data}
+          onChange={setData}
+          columns={columns}
+        />
+        <Button
+          onClick={addItem}
+          type="button"
+          className="mt-8 p-2 bg-green-500"
+        >
           <Plus /> Add Item
         </Button>
       </form>

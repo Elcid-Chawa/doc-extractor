@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,17 +9,34 @@ import InvoiceForm from "./_components/InvoiceForm";
 import InvoiceDetails from "./_components/InvoiceDetails";
 
 export default function InvoicePage() {
-  const [data, setData] = React.useState([
-    { item: "", qty: 0, price: 0, tax: 0 },
-  ]);
+  const [data, setData] = useState([{ item: "", qty: 0, price: 0, tax: 0 }]);
+  const [today, setToday] = useState(new Date().toISOString().split("T")[0]);
+
+  useEffect(() => {
+    setToday(new Date().toISOString().split("T")[0]);
+  }, []);
+
+  const [headerData, setHeaderData] = useState({
+    currency: "USD",
+    documentType: "invoice",
+    date: today,
+    invoiceNumber: 0,
+    cusotmerName: "",
+  });
+
   return (
-    <ResizablePanelGroup direction="horizontal">
+    <ResizablePanelGroup className="pt-4" direction="horizontal">
       <ResizablePanel>
-        <InvoiceForm data={data} setData={setData} />
+        <InvoiceForm
+          data={data}
+          setData={setData}
+          headerData={headerData}
+          setHeaderData={setHeaderData}
+        />
       </ResizablePanel>
       <ResizableHandle />
       <ResizablePanel>
-        <InvoiceDetails data={data} />
+        <InvoiceDetails data={data} headerData={headerData} />
       </ResizablePanel>
     </ResizablePanelGroup>
   );

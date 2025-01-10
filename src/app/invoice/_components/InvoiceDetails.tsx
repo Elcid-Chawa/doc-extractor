@@ -1,13 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  BlobProvider,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "./InvoicePDF";
 import { DownloadIcon } from "lucide-react";
 
-export default function InvoiceDetails({ data }: { data: any[] }) {
+export default function InvoiceDetails({
+  data,
+  headerData,
+}: {
+  data: any[];
+  headerData: any;
+}) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ export default function InvoiceDetails({ data }: { data: any[] }) {
       <h1>PDF Preview</h1>
       {/* PDF Preview */}
       <div className="border p-4 mb-4 max-h-[600px]">
-        <BlobProvider document={<InvoicePDF data={data} />}>
+        <BlobProvider document={<InvoicePDF data={data} headerData={headerData} />}>
           {({ url, loading }) =>
             loading ? (
               <p>Loading PDF preview...</p>
@@ -39,7 +42,7 @@ export default function InvoiceDetails({ data }: { data: any[] }) {
       </div>
       <div className="flex justify-end">
         <PDFDownloadLink
-          document={<InvoicePDF data={data} />}
+          document={<InvoicePDF data={data} headerData={headerData} />}
           fileName="somename.pdf"
         >
           {/* {({ loading }: { loading: boolean }) =>
