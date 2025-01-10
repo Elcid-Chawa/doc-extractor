@@ -73,7 +73,6 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell, idx) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     <FormField
                       control={form.control}
                       name={cell.column.id}
