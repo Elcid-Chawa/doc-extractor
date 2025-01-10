@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import Link from "next/link";
+
+import { CustomNavigationMenu } from "@/components/menu/CustomNavigationMenu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,30 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/invoice">
-                {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
-                Invoice
-                {/* </NavigationMenuLink> */}
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/viewer">
-                {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
-                Viewer
-                {/* </NavigationMenuLink> */}
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="w-screen h-20 bg-blue-900 flex justify-center">
+          <CustomNavigationMenu />
+        </div>
         {children}
       </body>
     </html>
