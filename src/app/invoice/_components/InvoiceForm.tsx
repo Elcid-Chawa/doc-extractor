@@ -64,7 +64,7 @@ export default function InvoiceForm({
   };
   return (
     <Form {...form}>
-      <form>
+      <form className="bg-white h-full p-3">
         <div className="flex w-[100%] gap-3 flex-wrap mb-3">
           <FormField
             control={form.control}
@@ -191,7 +191,7 @@ export default function InvoiceForm({
             <Plus />
           </Button>
         </div>
-        <div className="max-h-[600px] overflow-y-scroll">
+        <div className="max-h-[600px] overflow-y-scroll hide-scrollbar">
           <DataTable
             form={form}
             data={data}
@@ -241,7 +241,8 @@ export default function InvoiceForm({
         <hr className="my-4 border-2 border-gray-300 " />
         <div>
           <div className="flex justify-between">
-            <Label className="font-bold text-lg">Notes</Label> <span className="text-sm text-gray-500">*optional</span>
+            <Label className="font-bold text-lg">Notes</Label>{" "}
+            <span className="text-sm text-gray-500">*optional</span>
           </div>
           <div>
             <FormField
