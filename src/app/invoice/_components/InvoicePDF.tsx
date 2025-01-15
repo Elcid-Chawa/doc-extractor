@@ -14,40 +14,44 @@ export default function InvoicePDF({
     page: {
       display: "flex",
       flexDirection: "column",
-      backgroundColor: "#E4E4E4",
+      backgroundColor: "white",
+      width: "100%",
+      height: "100%",
+      margin: 0,
+      padding: 0,
     },
     section: {
-      margin: 10,
       padding: 10,
-      // flexGrow: 1,
+      flexGrow: 1,
     },
     row: {
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
       borderBottomWidth: 1,
-      borderBottomColor: "black",
+      borderBottomColor: "#d3d3d3",
       borderStyle: "solid",
     },
     trow: {
       display: "flex",
       flexDirection: "row",
-      alignItems: "flex-end",
-      borderBottomWidth: 1,
-      borderBottomColor: "black",
-      borderStyle: "solid",
+      justifyContent: "flex-end",
+      width: "300px",
     },
     cell: {
       width: "16.66%", // Adjusted to evenly distribute columns
-      textAlign: "center",
+      padding: 4,
       fontSize: 12,
     },
     totalscell: {
-      width: "16.66%", // Adjusted to evenly distribute columns
       textAlign: "right",
+      fontSize: 12,
+      padding: 4,
+      width: "50%",
     },
     boldText: {
       fontWeight: "bold",
+      fontSize: 12,
     },
     totals: {
       display: "flex",
@@ -57,7 +61,13 @@ export default function InvoicePDF({
     subSection: {
       display: "flex",
       flexDirection: "row",
-    }
+      flexBasis: "50%",
+      gap: 5,
+      marginBottom: 10,
+    },
+    regularText: {
+      fontSize: 12,
+    },
   });
 
   const calculatedSubTotal = () =>
@@ -66,15 +76,18 @@ export default function InvoicePDF({
     data.reduce((acc, item) => acc + item.price * (item.tax / 100), 0);
   const calculatedTotal = () => calculatedSubTotal() + calculatedTax();
   return (
-    <Document >
-      <Page size="A4" wrap={false} style={styles.page} >
-        <View style={{ backgroundColor: "green", height: "100px" }} />
+    <Document>
+      <Page size={"A4"} wrap={false} style={styles.page}>
+        <View
+          style={{ backgroundColor: "green", height: 100, marginBottom: 10 }}
+        />
+
         <View style={styles.section}>
           <Text
             style={{
               fontSize: 16,
               fontWeight: "bold",
-              marginBottom: 10,
+              marginVertical: 10,
             }}
           >
             {headerData.documentType.toUpperCase()}
@@ -84,18 +97,19 @@ export default function InvoicePDF({
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent: "space-between",
-              gap: 2,
+              // justifyContent: "space-between",
+              gap: 5,
             }}
           >
             {/* Invoice Details */}
             <View style={styles.subSection}>
               <View>
-                <Text>From:</Text>
+                <Text style={styles.boldText}>From:</Text>
               </View>
-              <View >
-                <Text>Invoice Number: {headerData.invoiceNumber}</Text>
-                <Text>Invoice Date: {headerData.date}</Text>
+              <View style={{ display: "flex", flexDirection: "column" }}>
+                <Text style={styles.regularText}>ABC Company</Text>
+                <Text style={styles.regularText}>hello@Abcompany.com</Text>
+                <Text style={styles.regularText}>+237 672 254 116</Text>
               </View>
             </View>
 
@@ -104,17 +118,17 @@ export default function InvoicePDF({
               <View>
                 <Text style={styles.boldText}>To: </Text>
               </View>
-              <View >
-                <Text style={{ fontSize: 12, fontWeight: "bold" }}>
-                  Bill To: {headerData.customerName}
-                </Text>
-                <Text style={{ fontWeight: "bold" }}>Shiping Address</Text>
-                <Text>Address</Text>
+              <View style={{ display: "flex", flexDirection: "column" }}>
+                <Text style={styles.regularText}>ABC Company</Text>
+                <Text style={styles.regularText}>hello@Abcompany.com</Text>
+                <Text style={styles.regularText}>+237 672 254 116</Text>
               </View>
             </View>
           </View>
 
-          <View style={{ ...styles.row, backgroundColor: "gray", padding: 5 }}>
+          <View
+            style={{ ...styles.row, backgroundColor: "#F0F0F0", padding: 5 }}
+          >
             <Text style={styles.cell}>ID</Text>
             <Text style={styles.cell}>Item</Text>
             <Text style={styles.cell}>Qty</Text>
@@ -127,7 +141,8 @@ export default function InvoicePDF({
               style={{
                 display: "flex",
                 flexDirection: "row",
-                borderBottom: "1px solid black",
+                paddingVertical: 4,
+                borderBottom: "1px solid #d3d3d3",
               }}
               key={idx}
             >
@@ -136,35 +151,66 @@ export default function InvoicePDF({
               <Text style={styles.cell}>{item.qty}</Text>
               <Text style={styles.cell}>{item.price}</Text>
               <Text style={styles.cell}>{item.tax}%</Text>
-              <Text style={styles.cell}>
+              <Text style={{ ...styles.cell, textAlign: "right" }}>
                 {parseInt(item.qty) * parseInt(item.price)}
               </Text>
             </View>
           ))}
         </View>
+
         <View
           style={{
             width: "100%",
             display: "flex",
             alignItems: "flex-end",
             // justifyContent: "flex-end",
-            padding: 10,
-            margin: 10,
+            marginBottom: 10,
+            paddingRight: 10,
           }}
         >
           <View style={styles.trow}>
             <Text style={styles.totalscell}>Sub Total:</Text>
-            <Text style={styles.cell}>{calculatedSubTotal()}</Text>
+
+            <Text
+              style={{
+                ...styles.totalscell,
+                borderBottomColor: "#d3d3d3",
+                borderBottomWidth: 2,
+                paddingBottom: 10,
+              }}
+            >
+              {calculatedSubTotal()}
+            </Text>
           </View>
           <View style={styles.trow}>
             <Text style={styles.totalscell}>
               Tax({`${headerData.currency}`}):
             </Text>
-            <Text style={styles.cell}>{calculatedTax()}</Text>
+            <Text
+              style={{
+                ...styles.totalscell,
+                borderBottomColor: "#d3d3d3",
+                borderBottomWidth: 2,
+                paddingVertical: 10,
+              }}
+            >
+              {calculatedTax()}
+            </Text>
           </View>
           <View style={styles.trow}>
             <Text style={styles.totalscell}>Total: </Text>
-            <Text style={styles.cell}>{calculatedTotal()}</Text>
+            <Text
+              style={{
+                ...styles.totalscell,
+                borderBottomColor: "#d3d3d3",
+                borderBottomWidth: 2,
+                paddingVertical: 10,
+                fontSize: 16,
+                fontWeight: 700,
+              }}
+            >
+              {calculatedTotal()}
+            </Text>
           </View>
           <View style={{ borderBottomWidth: 2 }}>
             <Text></Text>
