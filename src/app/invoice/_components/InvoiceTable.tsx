@@ -44,7 +44,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md  px-3  max-h-[500px] overflow-y-scroll">
+    <div className="rounded-md  px-3  max-h-[500px] overflow-y-scroll hide-scrollbar">
       <Table>
         <TableHeader className="bg-gray-200 w-full">
           {table.getHeaderGroups().map((headerGroup) => (
