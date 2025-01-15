@@ -25,8 +25,8 @@ export default function InvoicePage() {
   });
 
   return (
-    <ResizablePanelGroup className="pt-4" direction="horizontal">
-      <ResizablePanel>
+    <ResizablePanelGroup className="pt-4 h-screen" direction="horizontal">
+      <ResizablePanel className="h-full">
         <InvoiceForm
           data={data}
           setData={setData}
@@ -34,7 +34,7 @@ export default function InvoicePage() {
           setHeaderData={setHeaderData}
         />
       </ResizablePanel>
-      <ResizableHandle />
+      <ResizableHandle className="border border-2 mx-3" />
       <ResizablePanel>
         <InvoiceDetails data={data} headerData={headerData} />
       </ResizablePanel>

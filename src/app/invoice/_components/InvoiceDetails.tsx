@@ -23,10 +23,12 @@ export default function InvoiceDetails({
 
   return (
     <div className="px-5 h-full">
-      <h1>PDF Preview</h1>
+      <h1 className="font-bold text-lg">PDF Preview</h1>
       {/* PDF Preview */}
       <div className="border p-4 mb-4 max-h-[600px]">
-        <BlobProvider document={<InvoicePDF data={data} headerData={headerData} />}>
+        <BlobProvider
+          document={<InvoicePDF data={data} headerData={headerData} />}
+        >
           {({ url, loading }) =>
             loading ? (
               <p>Loading PDF preview...</p>
@@ -40,7 +42,7 @@ export default function InvoiceDetails({
           }
         </BlobProvider>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-center">
         <PDFDownloadLink
           document={<InvoicePDF data={data} headerData={headerData} />}
           fileName="somename.pdf"
@@ -57,11 +59,11 @@ export default function InvoiceDetails({
               </button>
             )
           } */}
-          <button className="btn flex gap-2 mt-8 border p-2 rounded-md">
+          <button style={{backgroundColor: "green", color: "white"}} className="btn flex gap-2 mt-8 border py-2 px-5">
             <span>
               <DownloadIcon />
             </span>
-            Download now!
+            Download
           </button>
         </PDFDownloadLink>
       </div>

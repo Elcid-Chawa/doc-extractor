@@ -44,14 +44,14 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border px-10  max-h-[530px] overflow-y-scroll">
+    <div className="rounded-md  px-3  max-h-[500px] overflow-y-scroll">
       <Table>
-        <TableHeader>
+        <TableHeader className="bg-gray-200 w-full">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-gray-900">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
