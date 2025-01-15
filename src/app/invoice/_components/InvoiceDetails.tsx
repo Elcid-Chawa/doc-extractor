@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
+import { BlobProvider, PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import InvoicePDF from "./InvoicePDF";
 import { DownloadIcon } from "lucide-react";
 
@@ -22,11 +22,15 @@ export default function InvoiceDetails({
   }
 
   return (
-    <div className="px-5 h-full">
+    <div className="px-5 h-full w-[100%] bg-gray-300">
       <h1 className="font-bold text-lg">PDF Preview</h1>
       {/* PDF Preview */}
-      <div className="border p-4 mb-4 max-h-[600px]">
-        <BlobProvider
+      <div className="max-h-[600px] w-full">
+        <PDFViewer showToolbar={false} className="w-[100%]  h-[600px]">
+          <InvoicePDF data={data} headerData={headerData} />
+        </PDFViewer>
+
+        {/* <BlobProvider
           document={<InvoicePDF data={data} headerData={headerData} />}
         >
           {({ url, loading }) =>
@@ -40,7 +44,7 @@ export default function InvoiceDetails({
               />
             )
           }
-        </BlobProvider>
+        </BlobProvider> */}
       </div>
       <div className="flex justify-center">
         <PDFDownloadLink
@@ -59,7 +63,10 @@ export default function InvoiceDetails({
               </button>
             )
           } */}
-          <button style={{backgroundColor: "green", color: "white"}} className="btn flex gap-2 mt-8 border py-2 px-5">
+          <button
+            style={{ backgroundColor: "green", color: "white" }}
+            className="btn flex gap-2 mt-8 border py-2 px-5"
+          >
             <span>
               <DownloadIcon />
             </span>
